@@ -1,18 +1,11 @@
 import { Logger } from '@nestjs/common';
 
 import { AppService } from 'src/app.service';
-import { hello } from './hello';
+import { userAutomationWorkflow } from './userAutomationWorkflow';
 
-export const getInngestFunctions = (dependencies: {
-  appService: AppService;
-  logger: Logger;
-  // Add Dependencies Here
-}) => {
+export const getInngestFunctions = (dependencies: {}) => {
   return [
-    hello({
-      appService: dependencies.appService,
-      logger: dependencies.logger,
-    }),
-    // Call other funtions with dependencies here like above
+    userAutomationWorkflow({}),
+    // Call other functions with dependencies here like above
   ];
 };

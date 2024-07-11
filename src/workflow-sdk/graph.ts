@@ -35,11 +35,12 @@ export const newDAG = (flow: Instance): DAG => {
     g.addEdge(edge.from, edge.to, { edge });
   }
 
-  if (hasCycle(g)) {
-    throw new Error(
-      'Workflow instances must be a DAG;  the given workflow has at least one cycle.',
-    );
-  }
+  // TODO - Bring this back after the initial implementation
+  // if (hasCycle(g)) {
+  //   throw new Error(
+  //     'Workflow instances must be a DAG;  the given workflow has at least one cycle.',
+  //   );
+  // }
 
   g.forEachNode((id, attrs) => {
     if (id !== sourceNodeID && g.inEdges(id).length === 0) {

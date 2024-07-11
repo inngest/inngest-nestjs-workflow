@@ -63,7 +63,7 @@ export interface EngineAction {
   kind: string;
   handler: ActionHandler;
 
-  // TODO: Types
+  // TODO: Types - Pass through types from a generic
   inputs?: Record<string, any>;
   outputs?: Record<string, any>;
 
@@ -86,6 +86,12 @@ export interface InstanceAction {
 
   name?: string;
   description?: string;
+
+  /**
+   * The data for the action, which may be used to configure the action handler.
+   *
+   */
+  data?: Record<string, any>;
 
   // TODO: Types.
   inputs?: Record<string, any>;
