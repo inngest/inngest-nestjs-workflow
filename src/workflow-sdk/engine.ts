@@ -1,4 +1,4 @@
-import jsonpath from 'jsonpath';
+import * as jsonpath from 'jsonpath';
 import {
   type RunArgs,
   type EngineOptions,
@@ -208,6 +208,14 @@ export class ExecutionState {
     let path = value.replace('$ref:', '');
     // This is a reference.  Grab the JSON path from the ref by removing "$ref:"
     // and grabbing the item from state.
+    console.log(
+      path,
+      {
+        event: this.#opts.event,
+        state: Object.fromEntries(this.#state),
+      },
+      jsonpath,
+    );
     const result = jsonpath.query(
       {
         event: this.#opts.event,
