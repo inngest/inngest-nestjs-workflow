@@ -74,6 +74,7 @@ const sendNotificationAction: EngineAction = {
   },
 };
 
+// Define the workflow engine which registers all possible actions and how to load user-defined DAGs
 const workflowEngine = new Engine({
   actions: [approvalAction, savePolicyVersionAction, sendNotificationAction],
   loader: async function (event) {
