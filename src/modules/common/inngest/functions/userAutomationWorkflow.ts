@@ -8,42 +8,6 @@ import { AppService } from 'src/app.service';
 
 import { Engine, type Instance, EngineAction } from 'src/workflow-sdk';
 
-// Define the user created DAG
-// NOTE - This would normally be created by the user via your UI and an API request
-const userDefinedWorkflow: Instance = {
-  actions: [
-    {
-      id: 'approve_by_cto',
-      kind: 'approval',
-      inputs: {
-        approvalUserId: '64e1a49e-af54-48a9-a141-625d222b439f',
-        // or $ref....whatever
-      },
-    },
-    {
-      id: 'save',
-      kind: 'save_policy_version',
-    },
-    {
-      id: 'send_rejected_notification',
-      kind: 'send_notification',
-      inputs: {
-        notificationType: 'email',
-        notification: 'The policy change has been rejected by the approver',
-      },
-    },
-  ],
-  edges: [
-    { from: '$source', to: 'approve_by_cto' },
-    { from: 'approve_by_cto', to: 'save', if: '$ref:$.state.approve_by_cto' },
-    {
-      from: 'approve_by_cto',
-      to: 'send_rejected_notification',
-      else: '$ref:$.state.approve_by_cto',
-    },
-  ],
-};
-
 // Define all possible actions
 const approvalAction: EngineAction = {
   kind: 'approval',
@@ -120,6 +84,42 @@ const workflowEngine = new Engine({
     return userDefinedWorkflow;
   },
 });
+
+// Define the user created DAG
+// NOTE - This would normally be created by the user via your UI and an API request
+const userDefinedWorkflow: Instance = {
+  actions: [
+    {
+      id: 'approve_by_cto',
+      kind: 'approval',
+      inputs: {
+        approvalUserId: '64e1a49e-af54-48a9-a141-625d222b439f',
+        // or $ref....whatever
+      },
+    },
+    {
+      id: 'save',
+      kind: 'save_policy_version',
+    },
+    {
+      id: 'send_rejected_notification',
+      kind: 'send_notification',
+      inputs: {
+        notificationType: 'email',
+        notification: 'The policy change has been rejected by the approver',
+      },
+    },
+  ],
+  edges: [
+    { from: '$source', to: 'approve_by_cto' },
+    { from: 'approve_by_cto', to: 'save', if: '$ref:$.state.approve_by_cto' },
+    {
+      from: 'approve_by_cto',
+      to: 'send_rejected_notification',
+      else: '$ref:$.state.approve_by_cto',
+    },
+  ],
+};
 
 /**
  *
